@@ -1,0 +1,6 @@
+name = "student-ai-proxy"
+main = "src/index.ts"
+compatibility_date = "2025-06-09"
+
+# account_id 也可通过 GitHub Secret CLOUDFLARE_ACCOUNT_ID 在 CI 中注入
+# OPENAI_API_KEY 通过 GitHub Secret 在部署时写入，切勿提交到仓库
