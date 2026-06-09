@@ -38,8 +38,21 @@ export default {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
 
+    if (request.method === "GET") {
+      return withCors(
+        new Response(
+          JSON.stringify({
+            status: "ok",
+            message: "Student AI Proxy is running. Send POST requests to this URL.",
+            endpoint: OPENAI_CHAT_URL,
+          }),
+          { headers: { "Content-Type": "application/json" } },
+        ),
+      );
+    }
+
     if (request.method !== "POST") {
-      return jsonError("Method not allowed", 405);
+      return jsonError("Method not allowed. Use POST for chat completions.", 405);
     }
 
     if (!env.OPENAI_API_KEY) {
