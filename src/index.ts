@@ -1,8 +1,9 @@
 export interface Env {
-  OPENAI_API_KEY: string;
+  DEEPSEEK_API_KEY: string;
 }
 
-const OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions";
+// const OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions";
+const DEEPSEEK_CHAT_URL = 'https://api.deepseek.com/v1/chat/completions';
 
 const CORS_HEADERS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
@@ -44,7 +45,7 @@ export default {
           JSON.stringify({
             status: "ok",
             message: "Student AI Proxy is running. Send POST requests to this URL.",
-            endpoint: OPENAI_CHAT_URL,
+            endpoint: DEEPSEEK_CHAT_URL,
           }),
           { headers: { "Content-Type": "application/json" } },
         ),
@@ -55,23 +56,23 @@ export default {
       return jsonError("Method not allowed. Use POST for chat completions.", 405);
     }
 
-    if (!env.OPENAI_API_KEY) {
-      return jsonError("OPENAI_API_KEY is not configured", 500);
+    if (!env.DEEPSEEK_API_KEY) {
+      return jsonError("DEEPSEEK_API_KEY is not configured", 500);
     }
 
     try {
-      const openaiResponse = await fetch(OPENAI_CHAT_URL, {
+      const deepseekResponse = await fetch(DEEPSEEK_CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${env.DEEPSEEK_API_KEY}`,
         },
         body: request.body,
       });
 
-      return withCors(openaiResponse);
+      return withCors(deepseekResponse);
     } catch {
-      return jsonError("Failed to proxy request to OpenAI", 502);
+      return jsonError("Failed to proxy request to DeepSeek", 502);
     }
   },
 };
