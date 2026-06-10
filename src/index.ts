@@ -81,6 +81,20 @@ export default {
       return jsonError("DEEPSEEK_API_KEY is not configured", 500);
     }
 
+    const body = await request.text();
+    if (!body.trim()) {
+      return jsonError(
+        "Request body is empty. Send JSON with model and messages.",
+        400,
+      );
+    }
+
+    try {
+      JSON.parse(body);
+    } catch {
+      return jsonError("Request body must be valid JSON.", 400);
+    }
+
     try {
       const upstreamResponse = await fetch(getChatUrl(env), {
         method: "POST",
@@ -88,7 +102,7 @@ export default {
           "Content-Type": "application/json",
           Authorization: `Bearer ${apiKey}`,
         },
-        body: request.body,
+        body,
       });
 
       return withCors(upstreamResponse);
