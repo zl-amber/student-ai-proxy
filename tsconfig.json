@@ -1,15 +1,13 @@
 {
-  "name": "student-ai-proxy",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "tail": "wrangler tail"
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true
   },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250609.0",
-    "typescript": "^5.8.3",
-    "wrangler": "^4.19.1"
-  }
+  "include": ["src/**/*.ts"]
 }
