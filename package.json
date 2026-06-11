@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "tail": "wrangler tail"
+    "tail": "wrangler tail",
+    "db:create": "wrangler d1 create student-ai-db",
+    "db:migrate:local": "wrangler d1 migrations apply student-ai-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply student-ai-db --remote"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250609.0",
