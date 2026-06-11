@@ -2,5 +2,16 @@ name = "student-ai-proxy"
 main = "src/index.ts"
 compatibility_date = "2025-06-09"
 
-# account_id 也可通过 GitHub Secret CLOUDFLARE_ACCOUNT_ID 在 CI 中注入
-# OPENAI_API_KEY 通过 GitHub Secret 在部署时写入，切勿提交到仓库
+[placement]
+mode = "smart"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "student-ai-db"
+# 首次部署前执行: npx wrangler d1 create student-ai-db
+# 将输出的 database_id 填入下方
+database_id = "c18019f6-f68e-4576-99b0-11587e17bf3b"
+
+[vars]
+TOKEN_PACK_AMOUNT = "50000"
+# 在 Cloudflare 控制台 Variables 中设置: SITE_URL, STRIPE_PRICE_ID
